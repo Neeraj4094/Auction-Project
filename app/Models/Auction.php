@@ -23,7 +23,7 @@ class Auction extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
-    public function event(){
+    public function event(){    
         return $this->belongsTo(Events::class);
     }
 
