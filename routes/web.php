@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Inventory_imageController;
 use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\CrudController;
 use App\Http\Controllers\Employee\EmployeeController;
 use App\Http\Controllers\Manager\ManagerController;
 use App\Http\Controllers\ProfileController;
@@ -36,6 +37,14 @@ Route::post('/update/student',[StudentController::class,'update'])->name('update
 Route::get('/delete/student/{id}',[StudentController::class,'delete'])->name('delete.student');
 
 
+Route::get('/add/employee',[CrudController::class,'add'])->name('add.employee');
+Route::get('/crud',[CrudController::class,'create'])->name('create.employee');
+Route::post('/add-employee',[CrudController::class,'store'])->name('store.employee');
+Route::get('/fetch-employee',[CrudController::class,'show'])->name('show.employee');
+Route::get('/fetch-all-employee',[CrudController::class,'get_students_data'])->name('show.all.employee');
+Route::get('/edit-employee/{id}',[CrudController::class,'edit_employee'])->name('edit.employee');
+Route::post('/update-employee',[CrudController::class,'update_employee'])->name('update.employee');
+Route::get('/delete-employee/{id}',[CrudController::class,'delete_employee'])->name('delete.employee');
 
 
 
@@ -61,13 +70,19 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function (){
         // Location Related Routes End
         
         // Category Related Routes Start
-        Route::get('/category',[CategoryController::class,'index']);
+        Route::get('/category',[CategoryController::class,'index'])->name('category');
         Route::get('/category/add',[CategoryController::class,'add'])->name('add.category');
-        Route::post('/category/store',[CategoryController::class,'store']);
+        Route::post('/category/store',[CategoryController::class,'store'])->name('store.category');
         Route::get('/category/edit/{id}',[CategoryController::class,'edit'])->name('category.edit');
         Route::post('/category/update/{id}',[CategoryController::class,'update'])->name('category.update');
         Route::post('/category/delete/{id}',[CategoryController::class,'soft_delete'])->name('category.soft_delete');
         Route::get('/category/trash_data',[CategoryController::class,'category_trash_data'])->name('category.trash_data');
+
+        // _______CATEGORY ROUTES________
+        Route::get('/add-category',[CategoryController::class,'addCategory'])->name('add.new.category');
+        Route::post('/store-category',[CategoryController::class,'storeCategory'])->name('store.new.category');
+        Route::get('/show-category',[CategoryController::class,'showCategory'])->name('show.category');
+        Route::get('/show-category-list',[CategoryController::class,'categoryLists'])->name('category.lists');
         // Category Related Routes End
         
         // Godown Related Routes Start
@@ -96,8 +111,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard',[UserController::class,'index']);
 
         // User Related Routes Start
-        Route::get('/add_user',[UserController::class,'add_user'])->name('user.add');
-        Route::post('/create',[RegisteredUserController::class,'store']);
+        // Route::get('/add_user',[UserController::class,'add_user'])->name('user.add');
+        // Route::post('/create',[RegisteredUserController::class,'store']);
         Route::get('/edit/{id}',[UserController::class,'edit'])->name('admin.edit');
         Route::post('/update/{id}',[UserController::class,'update'])->name('admin.update');
         Route::post('/delete/{id}',[UserController::class,'delete'])->name('admin.delete');
@@ -152,16 +167,18 @@ Route::middleware(['auth'])->group(function () {
     });
 
 Route::get('/',[HomeController::class,'auction_details'])->name('home');
-Route::get('/add_user',[AdminController::class,'add_user'])->name('user.add');
+Route::get('/add_user',[UserController::class,'add_user'])->name('user.add');
+Route::post('/create',[RegisteredUserController::class,'store'])->name('store.user');
 Route::get('/auction/inventory',[HomeController::class,'view_inventory']);
 Route::get('/buy_now',[HomeController::class,'buy_now'])->name('buy_now');
 
-Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+
+// Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('auth')->group(function () {
    
-});
-Route::prefix('admin')->middleware(AdminMiddleware::class)->group(function(){
+// });
+// Route::prefix('admin')->middleware(AdminMiddleware::class)->group(function(){
     
-});
+// });
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

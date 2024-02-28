@@ -60,7 +60,7 @@ class UserController extends Controller
 
     public function add_user(){
         $url = "/create";
-        return view('forms.add_user',compact('url'));
+        return view('forms.add.user',compact('url'));
     }
 
     public function delete($id){

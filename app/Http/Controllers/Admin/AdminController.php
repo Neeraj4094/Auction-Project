@@ -46,10 +46,10 @@ class AdminController extends Controller
         return redirect('/admin/dashboard')->with('message',"Account Updated Successfully");
     }
 
-    public function add_user(){
-        $url = "/create";
-        return view('forms.add_user',compact('url'));
-    }
+    // public function add_user(){
+    //     $url = "/create";
+    //     return view('forms.add_user',compact('url'));
+    // }
 
     public function delete($id){
         User::find($id)->delete();

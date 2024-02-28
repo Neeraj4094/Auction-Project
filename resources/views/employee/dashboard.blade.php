@@ -19,7 +19,7 @@
                 </a>
                 <a href="{{url('/trash_data')}}" class="px-5 py-2 rounded-md text-white bg-blue-600">
                     <span class="">User Trash Data</span>
-                </a>
+                </a>s
             </div>
         </div>
         <div class="border p-3 overflow-y-scroll h-[360px]">

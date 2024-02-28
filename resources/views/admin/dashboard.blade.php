@@ -14,56 +14,50 @@
                 <a href="{{url('/home')}}" class="px-5 py-2 rounded-md text-white bg-blue-600">
                     <span class="">Home</span>
                 </a>
-                <a href="{{url('/admin/add_user')}}" class="px-5 py-2 rounded-md text-white bg-blue-600">
+                <a href="{{url('/add_user')}}" class="px-5 py-2 rounded-md text-white bg-blue-600">
                     <span class="">Add User</span>
-                </a>
-                
-                <a href="{{url('/admin/dashboard')}}" class="px-5 py-2 rounded-md text-white bg-blue-600">
-                    <span class="">User Data</span>
                 </a>
                 <a href="{{url('/admin/trash_data')}}" class="px-5 py-2 rounded-md text-white bg-blue-600">
                     <span class="">User Trash Data</span>
                 </a>
-                <a href="{{url('/admin/location/trash_data')}}" class="px-5 py-2 rounded-md text-white bg-blue-600">
-                    <span class="">Location Trash Data</span>
-                </a>
             </div>
         </div>
-        <div class="border p-3 overflow-y-scroll h-[360px]">
+        <div class="border p-3 overflow-y-scroll h-[365px]">
             @auth
             @if(count($users)>0 || !empty($users))
                 @foreach($users as $user)
-                <div class="border rounded-lg grid grid-cols-2 p-2">
+                <div class="border rounded-md grid grid-cols-3 p-3 mb-3 shadow">
                     <div class="grid">
                         <span>Name :- {{$user->name}}</span>
                         <span>Email :- {{$user->email}}</span>
                         <span>Address :- {{$user->address}}</span>
                     </div>
-                    <div class="flex items-center justify-between">
                     <div class="grid">
                         <span>Created Date :- {{$user->created_at}}</span>
                         <span>Updated Date :- {{$user->updated_at}}</span>
                     </div>
-                    <span class="px-2 py-1 bg-blue-600 text-white rounded-md">{{($user->status === 1) ? "Active" : "Blocked" }}</span>
-                    @if($btn_name == "User Data")
-                        <form action="{{url('/admin/restore',['id'=>$user->id])}}" method="post">
-                        @csrf
-                            <button type="submit">Restore</button>
-                        </form>
-                        <form action="{{url("/admin/delete/$user->id")}}" method="post">
-                        @csrf
-                            <button type="submit">Delete</button>
-                        </form>
-                    @else
-                        <form action="{{url('/admin/edit',['id'=>$user->id])}}" method="get">
-                        @csrf
-                            <button type="submit">Edit</button>
-                        </form>
-                        <form action="{{url("/admin/delete/$user->id")}}" method="post">
-                        @csrf
-                            <button type="submit">Delete</button>
-                        </form>
-                    @endif
+                    <div class="flex items-center justify-between">
+                        <span class="px-2 py-1 bg-purple-700 text-white rounded-md">{{($user->status === 1) ? "Active" : "Blocked" }}</span>
+                        <span class="px-2 py-1 bg-blue-600 text-white rounded-md">{{ucwords($user->role)}}</span>
+                        @if($btn_name == "User Data")
+                            <form action="{{url('/admin/restore',['id'=>$user->id])}}" method="post">
+                            @csrf
+                                <button type="submit">Restore</button>
+                            </form>
+                            <form action="{{url("/admin/delete/$user->id")}}" method="post">
+                            @csrf
+                                <button type="submit">Delete</button>
+                            </form>
+                        @else
+                            <form action="{{url('/admin/edit',['id'=>$user->id])}}" method="get">
+                            @csrf
+                                <button type="submit">Edit</button>
+                            </form>
+                            <form action="{{url("/admin/delete/$user->id")}}" method="post">
+                            @csrf
+                                <button type="submit">Delete</button>
+                            </form>
+                        @endif
                     </div>
                 </div>
                 @endforeach

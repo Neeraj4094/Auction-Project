@@ -22,7 +22,15 @@
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex space-x-4">
             <a href="{{url('/')}}" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Home</a>
-            <a href="{{url('/login')}}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Dashboard</a>
+            @auth
+            @if(auth()->user()->role === "admin")
+            <a href="{{url('/admin/dashboard')}}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Dashboard</a>
+            @elseif(auth()->user()->role === "manager")
+            <a href="{{url('/manager/dashboard')}}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Dashboard</a>
+            @else
+            <a href="{{url('/dashboard')}}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Dashboard</a>
+            @endif
+            @endauth
             @if(!auth()->check())
               <a href="{{url('/add_user')}}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Sign Up</a>
               <a href="{{url('/login')}}" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Login</a>
